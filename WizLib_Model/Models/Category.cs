@@ -9,11 +9,10 @@ namespace WizLib_Model.Models
 {
     public class Category
     {
-        //public int Id { get; set; }  //if the name is Id, then its by default primary key with identity. else mention [Key]
+        //public int Id { get; set; }  //if the name ends with Id, then its by default primary key with identity. else mention [Key]
 
 
-        [Key]
-        public int Category_Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }
