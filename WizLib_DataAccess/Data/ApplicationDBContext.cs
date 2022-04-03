@@ -24,8 +24,14 @@ namespace WizLib_DataAccess.Data
 
         //instead of Category table Busiess decided a change to have book details table
         public DbSet<BookDetail> BookDetails { get; set; }
+        public DbSet<BookAuthor> BookAuthors { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //configure fluent API
 
-
+            //composite key  (many:many relation BookAuthor table)
+            modelBuilder.Entity<BookAuthor>().HasKey(ba => new { ba.Author_Id, ba.Book_Id });
+        }
     }
 }

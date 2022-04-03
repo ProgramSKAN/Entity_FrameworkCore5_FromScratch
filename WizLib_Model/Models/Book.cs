@@ -42,5 +42,7 @@ namespace WizLib_Model.Models
         [ForeignKey("Publisher")]//1:many
         public int Publisher_Id { get; set; }//each publish can publish many books
         public Publisher Publisher { get; set; }
+
+        public ICollection<BookAuthor> BookAuthors { get; set; }// many:many relation between book and author
     }
 }

@@ -29,5 +29,7 @@ namespace WizLib_Model.Models
                 return $"{FirstName} {LastName}";
             }
         }
+
+        public ICollection<BookAuthor> BookAuthors { get; set; }// many:many relation between book and author
     }
 }
