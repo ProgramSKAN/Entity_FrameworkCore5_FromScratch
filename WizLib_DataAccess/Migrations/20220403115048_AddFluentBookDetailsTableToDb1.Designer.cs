@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WizLib_DataAccess.Data;
 
 namespace WizLib_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220403115048_AddFluentBookDetailsTableToDb1")]
+    partial class AddFluentBookDetailsTableToDb1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,22 +116,6 @@ namespace WizLib_DataAccess.Migrations
                     b.HasKey("BookDetail_Id");
 
                     b.ToTable("BookDetails");
-                });
-
-            modelBuilder.Entity("WizLib_Model.Models.Category", b =>
-                {
-                    b.Property<int>("Category_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CataegoryName");
-
-                    b.HasKey("Category_Id");
-
-                    b.ToTable("tbl_Category");
                 });
 
             modelBuilder.Entity("WizLib_Model.Models.Fluent_Author", b =>

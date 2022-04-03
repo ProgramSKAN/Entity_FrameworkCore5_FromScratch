@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WizLib_DataAccess.Data;
 
 namespace WizLib_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220403113834_AddFluentBookDetailsTableToDb")]
+    partial class AddFluentBookDetailsTableToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,22 +118,6 @@ namespace WizLib_DataAccess.Migrations
                     b.ToTable("BookDetails");
                 });
 
-            modelBuilder.Entity("WizLib_Model.Models.Category", b =>
-                {
-                    b.Property<int>("Category_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CataegoryName");
-
-                    b.HasKey("Category_Id");
-
-                    b.ToTable("tbl_Category");
-                });
-
             modelBuilder.Entity("WizLib_Model.Models.Fluent_Author", b =>
                 {
                     b.Property<int>("Author_Id")
@@ -155,7 +141,7 @@ namespace WizLib_DataAccess.Migrations
 
                     b.HasKey("Author_Id");
 
-                    b.ToTable("Fluent_Authors");
+                    b.ToTable("Fluent_Author");
                 });
 
             modelBuilder.Entity("WizLib_Model.Models.Fluent_Book", b =>
@@ -190,7 +176,7 @@ namespace WizLib_DataAccess.Migrations
 
                     b.HasIndex("Publisher_Id");
 
-                    b.ToTable("Fluent_Books");
+                    b.ToTable("Fluent_Book");
                 });
 
             modelBuilder.Entity("WizLib_Model.Models.Fluent_BookAuthor", b =>
@@ -246,7 +232,7 @@ namespace WizLib_DataAccess.Migrations
 
                     b.HasKey("Publisher_Id");
 
-                    b.ToTable("Fluent_Publishers");
+                    b.ToTable("Fluent_Publisher");
                 });
 
             modelBuilder.Entity("WizLib_Model.Models.Genre", b =>
