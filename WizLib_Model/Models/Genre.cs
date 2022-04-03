@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace WizLib_Model.Models
 {
+    [Table("tb_Genre")]
     public class Genre
     {
         public int GenreId { get; set; }// GenreId> primary key automatically since name ends with Id.Genre_Id won't detect as primary key
+        [Column("Name")]
         public string GenreName { get; set; }
         //public int DisplayOrder { get; set; }
     }

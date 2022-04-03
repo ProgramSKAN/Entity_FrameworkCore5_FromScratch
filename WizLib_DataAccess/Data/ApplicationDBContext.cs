@@ -18,5 +18,10 @@ namespace WizLib_DataAccess.Data
         //Register All table models that needs to be created here
         public DbSet<Category> Categories { get; set; } // Table name: Categories with schema Category model
         public DbSet<Genre> Genres { get; set; } //if here is not added, then add-migration created empty migration. so you can delete that file and rerun
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+
+
     }
 }
