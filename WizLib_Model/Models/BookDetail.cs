@@ -19,6 +19,6 @@ namespace WizLib_Model.Models
         public double Weight { get; set; }
 
         //this enforces 1:1 relationship. ie; Book detail has 1 book. and book table has 1 detail for a book
-        public Book Book { get; set; }
+        public Book Book { get; set; } //1:1
     }
 }

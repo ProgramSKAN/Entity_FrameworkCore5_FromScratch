@@ -35,8 +35,12 @@ namespace WizLib_Model.Models
         */
 
 
-        [ForeignKey("BookDetail")]
+        [ForeignKey("BookDetail")]//1:1
         public int BookDetail_Id { get; set; } //BookDetail_Id column created and foreign keyed to BookDetail Table
         public BookDetail BookDetail { get; set; }
+
+        [ForeignKey("Publisher")]//1:many
+        public int Publisher_Id { get; set; }//each publish can publish many books
+        public Publisher Publisher { get; set; }
     }
 }

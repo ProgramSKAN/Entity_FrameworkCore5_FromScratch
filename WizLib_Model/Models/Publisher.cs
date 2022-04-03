@@ -17,5 +17,9 @@ namespace WizLib_Model.Models
         [Required]
         public string Location { get; set; }
 
+
+        //setsup 1:many relationship
+        public List<Book> Books { get; set; }// wach book has many publishers
+
     }
 }
