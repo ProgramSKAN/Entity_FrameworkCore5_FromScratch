@@ -23,5 +23,20 @@ namespace WizLib_Model.Models
 
         [NotMapped] //this prop won't be a column in database. its just for computaion
         public string PriceRange { get; set; } // if you remove this , then no add-migration is need as it not mapped to DB
+
+        /*removed due to change requirement. to remove Catgory table and use BookDetail instead--------------------------
+
+         //public Category Category { get; set; }//this creates Category_Id Column in book Table, index it and foreignKey it
+         //but to define FK coulmn explicity do below
+
+         [ForeignKey("Category")]
+         public int Category_Id { get; set; }
+         public Category Category { get; set; }//this creates Category_Id Column in book Table, index it and foreignKey it
+        */
+
+
+        [ForeignKey("BookDetail")]
+        public int BookDetail_Id { get; set; } //BookDetail_Id column created and foreign keyed to BookDetail Table
+        public BookDetail BookDetail { get; set; }
     }
 }

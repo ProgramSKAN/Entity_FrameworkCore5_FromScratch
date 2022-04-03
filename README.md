@@ -95,10 +95,11 @@ else In beginning you can delete all migrations folder and run new migrations in
 
 ## Mapping
 1. Book-Category > 1:1 > each book have one category
-
+* book has foreign key of Category_Id
 
 2. Book-Author > many:many > author can have many book ans single book have many authors
-3. Book-Publisher > 1:many >Every book as atleast 1 publisher
+3. Book-Publisher > 1:many >single book has 1 publisher. but 1 publisher publishes many books
+4. Book-BookDetail > 1:1 relation
 
 > add-migration AddBooksTableToDb
 
