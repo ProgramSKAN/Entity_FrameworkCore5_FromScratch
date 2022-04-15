@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace WizLib_Model.Models
 {
+    //intermediate table for many:many relation between book and author
     public class Fluent_BookAuthor
     {
         //[Key]

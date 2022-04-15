@@ -22,6 +22,7 @@ namespace WizLib_Model.Models
             }
         }
 
+        //book - author  many : many relation. BookAuthor intermediate table
         public ICollection<Fluent_BookAuthor> Fluent_BookAuthors { get; set; }
 
     }

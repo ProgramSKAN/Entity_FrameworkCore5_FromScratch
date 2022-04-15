@@ -50,15 +50,15 @@ namespace WizLib_DataAccess.Data
             modelBuilder.Entity<Fluent_BookDetail>().HasKey(b => b.BookDetail_Id);
             modelBuilder.Entity<Fluent_BookDetail>().Property(b=>b.NumberOfChapters).IsRequired();
 
-
+            //modelBuilder.Entity<Fluent_Book>().HasOne().......  //OR
             modelBuilder.ApplyConfiguration(new FluentBookConfig());
             modelBuilder.ApplyConfiguration(new FluentBookDetailsConfig());
             modelBuilder.ApplyConfiguration(new FluentBookAuthorConfig());
             modelBuilder.ApplyConfiguration(new FluentPublisherConfig());
             modelBuilder.ApplyConfiguration(new FluentAuthorConfig());
 
-
-            //Change Category Table name and column name using fluent api
+            //combination of fluent api and data annotation
+            //Change Category Table name and column name using fluent api and set [key] in model like data annotation 
             modelBuilder.Entity<Category>().ToTable("tbl_Category");
             modelBuilder.Entity<Category>().Property(c => c.Name).HasColumnName("CataegoryName");
         }

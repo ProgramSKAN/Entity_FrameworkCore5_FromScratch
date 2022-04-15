@@ -23,11 +23,13 @@ namespace WizLib_DataAccess.FluentConfig
             modelBuilder.Property(b => b.Price).IsRequired();
 
 
-            //one to one relation between book and book detail
+            //1:1 relation between book and book detail
             modelBuilder
                 .HasOne(b => b.Fluent_BookDetail)
-                .WithOne(b => b.Fluent_Book).HasForeignKey<Fluent_Book>("BookDetail_Id");
-            //one to many relation between book and publisher
+                .WithOne(b => b.Fluent_Book).HasForeignKey<Fluent_Book>("BookDetail_Id");//BookDetail_Id is FK in book table
+            
+            
+            //1 : many relation between book and publisher
             modelBuilder
                .HasOne(b => b.Fluent_Publisher)
                .WithMany(b => b.Fluent_Book).HasForeignKey(b => b.Publisher_Id);
