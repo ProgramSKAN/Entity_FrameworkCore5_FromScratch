@@ -262,21 +262,26 @@ namespace WizLib.Controllers
 
 
             //VIEWS
-            //var viewList = _db.BookDetailsFromViews.ToList();
-            //var viewList1 = _db.BookDetailsFromViews.FirstOrDefault();
-            //var viewList2 = _db.BookDetailsFromViews.Where(u => u.Price > 500);
+            var viewList = _db.BookDetailsFromViews.ToList();
+            var viewList1 = _db.BookDetailsFromViews.FirstOrDefault();
+            var viewList2 = _db.BookDetailsFromViews.Where(u => u.Price > 500);
 
-            //RAW SQL
-
+            //RAW SQL can be executed in 2 ways FromSqlRaw(),FromSqlInterpolated()
+            //but using this it has to return all column of books entity not partial
             var bookRaw = _db.Books.FromSqlRaw("Select * from dbo.books").ToList();
 
             //SQL Injection attack prone
             int id = 2;
+            var bookRaw1 = _db.Books.FromSqlRaw("Select * from dbo.books where Book_Id="+id).ToList();// this cause sql injection. never do this
+
+            //FromSqlInterpolated protects from sql injection
             var bookTemp1 = _db.Books.FromSqlInterpolated($"Select * from dbo.books where Book_Id={id}").ToList();
 
+            //Stored Proc
             var booksSproc = _db.Books.FromSqlInterpolated($" EXEC dbo.getAllBookDetails {id}").ToList();
 
-            //.NET 5 only
+            //Include Filters > .NET 5 only
+            //BookAuthors is a collection, so can filter
             var BookFilter1 = _db.Books.Include(e => e.BookAuthors.Where(p => p.Author_Id == 5)).ToList();
             var BookFilter2 = _db.Books.Include(e => e.BookAuthors.OrderByDescending(p => p.Author_Id).Take(2)).ToList();
 

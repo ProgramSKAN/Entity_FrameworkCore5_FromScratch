@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace WizLib.Controllers
         public IActionResult Index()//right click , add empty razor page. Creates views>Category>index.cshtml
         {
             List<Category> objList = _db.Categories.ToList();
+            //List<Category> objList = _db.Categories.AsNoTracking().ToList(); //use AsNoTracking() since it is read only data. efficient
             return View(objList);
         }
 

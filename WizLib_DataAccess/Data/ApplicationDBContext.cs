@@ -37,6 +37,8 @@ namespace WizLib_DataAccess.Data
         public DbSet<Fluent_Publisher> Fluent_Publishers { get; set; }
         public DbSet<Category> Categories { get; set; }
 
+        //view
+        public DbSet<BookDetailsFromView> BookDetailsFromViews { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //configure fluent API
@@ -61,6 +63,14 @@ namespace WizLib_DataAccess.Data
             //Change Category Table name and column name using fluent api and set [key] in model like data annotation 
             modelBuilder.Entity<Category>().ToTable("tbl_Category");
             modelBuilder.Entity<Category>().Property(c => c.Name).HasColumnName("CataegoryName");
+
+            //View
+            //create empty migration and write view sql query in up method and map return type here
+            //HasNoKey() > tells EF core that there is no primary key. EF core never tracks this entity since it has no PK. so anything read from view is readonly.
+            //eventhough if you set tracking explicitly EF core ignores it
+
+            //ToView() > without this EF core creates BookDetailsFromView table in DB. so mention view map
+            modelBuilder.Entity<BookDetailsFromView>().HasNoKey().ToView("GetOnlyBookDetails");
         }
     }
 }

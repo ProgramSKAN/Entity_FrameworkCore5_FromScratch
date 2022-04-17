@@ -208,3 +208,51 @@ var FilteredBook= BookList.Where(b=>b.Price>500).ToList();
 * So if everything is in modified state, when you see the changes it will update everything
 
 * therefore,Attach puts all th enties in the graph in the unchanged state however if something from that unchanged state is modified, Attach will change its state to modified.
+
+## Change Tracker in EF core
+* Change Tracker class provides access to change tracking information and operations for entity instances the context is tracking.
+* IN EF Core, the DbContext includes the ChangeTracker class and it starts tracking of all the entities as soon as it retrieved using DBContext.
+* tracking means , whenever you access anything using DB context object, it keeps a track of that object. In entity framework core the DBContext includes the change tracker class and its starts tracking all the entities as soon as it is retrieved using DBContext.
+* there are multiple states with the entity
+* Change tarcker tracks an entity using any of the following states:
+1. Added State
+    * the entity is being tracked by the context but does not yet exist in db. if a new entity or entities are added into the context using Add() method, then it will be marked as Added.
+2. Unchanaged
+    * the entity is being tracked by the context and exists in the database. when the entity or entities are retrieved using raw SQL query or LINQ-to-Entities queries will have the unchanged state
+3. Modified
+    * the entity is being tracked by the context and exists in the database.the entity will be marked as modified if the value of property of an entity is changed in the scope of dbcontext
+4. Deleted
+    * the entity is being tracked by the context and exists in the database.if any entity is removed from the dbcontext using the Remove() method, the it will be marked as deleted
+5. Detached
+    * if the entity or entitires created or retrieved out of the scope of current DbContext instance, then it will be marked as detached.(eg: if you created new local instance of application DBcontext within your dbcontext then it will change the state to detached)
+
+to see tracking entities: _dbContext.ChangeTracker.Entries()
+
+## Tracking vs No Tracking
+* EF core tracks the entities that you retrieve
+* if the entity is tracked, any changes detected in the entity will be persisted to the database during saveCHanges()
+
+1. Tracking
+* by default queries that return entity types are tracking.
+* in the following eg, the change to the book will be detected and persisted to the database during SaveChanges()
+```
+var book=_db.Books.SingleOrDefault(b=>b.BookId==1);
+book.Price=550;
+_db.SaveChanges();
+```
+
+2. No Tracking
+* No Tracking quries are useful when results are used in read-only scenario.
+* they are quicker to execute because there is no need to set up change tracking information
+```
+var blogs=_db.Books.AsNoTracking().ToList();
+```
+
+## Stored proc and View
+* add empty migration and write sql SP in up method
+* set entity and map entity in ApplicationContext
+
+## Raw SQL
+* RAW SQL can be executed in 2 ways FromSqlRaw(),FromSqlInterpolated()
+* but using this it has to return all column of books entity not partial
+
