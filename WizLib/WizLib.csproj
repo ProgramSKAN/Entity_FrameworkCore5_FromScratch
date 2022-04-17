@@ -20,8 +20,4 @@
     <ProjectReference Include="..\WizLib_Model\WizLib_Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
-
 </Project>

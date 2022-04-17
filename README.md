@@ -133,3 +133,78 @@ public int Author_Id { get; set; }
 
 Fluent_Book.cs, Fluent_Author.cs, Fluent_BookAuthor.cs, Fluent_BookDetail.cs,  Fluent_Publisher.cs
 
+
+## Bulk Insert or delete
+* done using AddRange or RemoveRange
+* adding 2 > runs 2 insert statements
+* add 5 > runs all in single insert. ie, bulk insert. the default threshold in sql server provider that starts using batch commands for >=4 operations
+* using Add() in a for loop OR AddRange() by passing list > both are same. bulk append only if records >=4
+
+* Similarly Remove2 runs in 2 different delete statements, Remove5 runs in bulk
+
+
+## Projections in EF Core
+* it is a way for translating a full entity into a C# class with a subset of those properties
+* it is used to create a query that selects from a set of entities in your model but returns results that are of a different type.
+
+eg: select only few columns from customers table. ie, customer data is projected to anonymous type
+> var customer= context.customers.Select(cust=>new{Id=cust.CustomerId,FullName=cust.FirstName+cust.LastName}).ToList()
+
+## Eager Loading
+all the connected entities are loading by one query using joins
+
+using>      .Include()
+
+## Deferred Execution in EF Core
+* queries in EF core are not execute when they are created
+* they are executed under the following scenarios
+
+1. when they are iterated over
+```
+var bookCollection=_db.books;
+double totalPrice=0;
+foreach(var book in bookCollection){  >query executes here
+    tottalPrice += book.Price;
+}
+```
+2. Call ToDictionary, ToList, ToArray on the reault
+```
+var bookCollection=_db.books.ToList();    >query executes here
+double totalPrice=0;
+foreach(var book in bookCollection){
+    tottalPrice += book.Price;
+}
+```
+3. Call any method that return single object (First, SIngle, Count, Max,...etc)
+```
+var bookCollection=_db.books;
+var bookCount1=bookCollection.Count(); >query executes here
+var bookCount2=_db.books.Count(); >query executes here
+}
+```
+## IQueryable vs IEnumerable
+* IQueryable interface inherits from IEnumerable
+* Anything you do with IEnumerable can be done with IQueryable
+* IEnumerable filters data on client side. IQueryable filters data on DB side
+
+1. this queries all records in a books table without where clause. after that filter happens in code
+```
+IEnumerable<Books> BookList = _db.Books;
+var FilteredBook= BookList.Where(b=>b.Price>500).ToList();
+```
+
+2. this queries only records >500 in a books table with where clause
+```
+IQueryable<Books> BookList = _db.Books;
+var FilteredBook= BookList.Where(b=>b.Price>500).ToList();
+```
+
+## Attach vs Update
+* Attach puts all entities into the 'UNCHANGED' state. however entities will be put in the 'ADDED' state if they have stored generated keys like identity column and no key value has been set.
+* Attach is used to tracking a mix of new and existing things where existing things had not changed.
+* the new entities will be inserted while the existing enities will not be saved other than to update any necessary foreign key values.
+
+* Update works same as attached except that entities are put in 'MODIFIED' state instead of 'UNCHANGED' state.
+* So if everything is in modified state, when you see the changes it will update everything
+
+* therefore,Attach puts all th enties in the graph in the unchanged state however if something from that unchanged state is modified, Attach will change its state to modified.

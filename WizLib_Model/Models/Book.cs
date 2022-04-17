@@ -35,8 +35,8 @@ namespace WizLib_Model.Models
         */
 
 
-        [ForeignKey("BookDetail")]//1:1
-        public int BookDetail_Id { get; set; } //BookDetail_Id column created and foreign keyed to BookDetail Table
+        [ForeignKey("BookDetail")]//1:1  //make this nullable as it makes error while inserting new book
+        public int? BookDetail_Id { get; set; } //BookDetail_Id column created and foreign keyed to BookDetail Table
         public BookDetail BookDetail { get; set; }// due to this prop, BookDetail is automatically created even if you dont specify BookDetailin DBSet<>. still better add
 
         [ForeignKey("Publisher")]//1:many  //Publisher can have >1 book
